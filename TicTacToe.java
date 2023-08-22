@@ -103,32 +103,9 @@ public class TicTacToe {
     }
 
 
-    // Method to check if one entire row is empty
-    public static boolean rowsAreEmpty() {
-        boolean cond = true;
-
-        for (int i = 0; i < 3; i++) {
-            if ((matrix[i][0].character != " ") && (matrix[i][1].character != " ") && (matrix[i][2].character != " ")) {
-                cond = false;
-            }
-        }
-
-        return cond;
-    }
-    // Method to check if one entire column is empty
-    public static boolean columnsAreEmpty() {
-        boolean cond = true;
-
-        for (int i = 0; i < 3; i++) {
-            if ((matrix[0][i].character != " ") && (matrix[1][i].character != " ") && (matrix[2][i].character != " ")) {
-                cond = false;
-            }
-        }
-
-        return cond;
-    }
-    // Method to check if diagonals are empty
-    public static boolean downwardsDiagonalISEmpty() {
+    // Methods to check emptiness of rows, columns and diagonals
+    // Methods to check if the diagonals are empty
+    public static boolean downwardsDiagonalIsEmpty() {
         boolean cond = true;
 
         for (int i = 0; i < 3; i++) {
@@ -139,7 +116,7 @@ public class TicTacToe {
 
         return cond;
     }
-    public static boolean upwardsDiagonalISEmpty() {
+    public static boolean upwardsDiagonalIsEmpty() {
         boolean cond = true;
 
         for (int i = 0; i < 3; i++) {
@@ -150,45 +127,59 @@ public class TicTacToe {
 
         return cond;
     }
+
+    // Method to check if a row on an index is full or not
+    public static boolean rowIsEmpty(int rowindex) {
+        // Will return false if any of the elements in the row is empty
+        for (int i = 0; i < 3; i++) {
+            if (matrix[rowindex][i].character != " ") {
+                return false;
+            }
+        }
+
+        return true;
+    }
+    // Method to check if a column on an index is full or not
+    public static boolean columnIsEmpty(int columnindex) {
+        // Will return false if any of the elements in the column is empty
+        for (int i = 0; i < 3; i++) {
+            if (matrix[i][columnindex].character != " ") {
+                return false;
+            }
+        }
+
+        return true;
+    }
     
 
-    // REDO
     // Method to check if the game is over or not
     public static boolean gameIsOver() {
 
         for (int i = 0; i < 3; i++) {
             // If one of the rows is full with Xs or Os
-            if (!(rowsAreEmpty())) {
-
-                    if ((matrix[i][0].character == matrix[i][1].character) && (matrix[i][1].character == matrix[i][2].character)) {
-                        System.out.println("Row " + i + " is full");
-                        return true;
-                    }
-                
+            if (!(rowIsEmpty(i))) {
+                if ((matrix[i][0].character.equals(matrix[i][1].character)) && (matrix[i][1].character.equals(matrix[i][2].character))) {
+                    System.out.println("Row " + i + " is full");
+                    return true;
+                }
             }
 
             // If one of the columns is full with Xs or Os
-            if (!(columnsAreEmpty())) {
-                
-                    System.out.println("Column" + i + "is full");
-                    if ((matrix[0][i].character == matrix[1][i].character) && (matrix[1][i].character == matrix[2][i].character)) {
-                        return true;
-                    }
-                
-            }
-
-            // If one of the diagonals is full with Xs or Os
-            if (!(downwardsDiagonalISEmpty())) {
-                if ((matrix[0][0].character == matrix[1][1].character) && (matrix[1][1].character == matrix[2][2].character)) {
-                    System.out.println("Downwards diagonal is full");
+            if (!(columnIsEmpty(i))) {
+                if ((matrix[0][i].character.equals(matrix[1][i].character)) && (matrix[1][i].character.equals(matrix[2][i].character))) {
                     return true;
                 }
             }
-            if (!(upwardsDiagonalISEmpty()))  {
-                if ((matrix[2][0].character == matrix[1][1].character) && (matrix[1][1].character == matrix[0][2].character)) {
-                    System.out.println("Upwards diagonal is full");
-                    return true;
-                }
+        }
+        // If one of the diagonals is full with Xs or Os
+        if (!(downwardsDiagonalIsEmpty())) {
+            if ((matrix[0][0].character.equals(matrix[1][1].character)) && (matrix[1][1].character.equals(matrix[2][2].character))) {
+                return true;
+            }
+        }
+        if (!(upwardsDiagonalIsEmpty()))  {
+            if ((matrix[2][0].character.equals(matrix[1][1].character)) && (matrix[1][1].character.equals(matrix[0][2].character))) {
+                return true;
             }
         }
 
